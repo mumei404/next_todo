@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import ClearCompleted from './ClearCompleted';
 
 const meta: Meta<typeof ClearCompleted> = {
