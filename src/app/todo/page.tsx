@@ -7,6 +7,21 @@ import TodoList from './components/TodoList'
 import ClearCompleted from './components/ClearCompleted'
 import { Todo } from './types'
 
+// ブラウザ互換性のあるUUID生成関数
+function generateUUID(): string {
+  // crypto.randomUUID() が利用可能な場合は使用
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID()
+  }
+  
+  // フォールバック: 簡単なUUID v4 生成
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
+
 export default function TodoPage() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [inputText, setInputText] = useState('')
@@ -16,7 +31,7 @@ export default function TodoPage() {
       setTodos([
         ...todos,
         {
-          id: crypto.randomUUID(),
+          id: generateUUID(),
           text: inputText.trim(),
           completed: false,
         },
