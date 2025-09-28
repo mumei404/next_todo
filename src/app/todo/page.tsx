@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 interface Todo {
-  id: number
+  id: string
   text: string
   completed: boolean
 }
@@ -17,7 +17,7 @@ export default function TodoPage() {
       setTodos([
         ...todos,
         {
-          id: Date.now(),
+          id: crypto.randomUUID(),
           text: inputText.trim(),
           completed: false,
         },
@@ -26,7 +26,7 @@ export default function TodoPage() {
     }
   }
 
-  const toggleTodo = (id: number) => {
+  const toggleTodo = (id: string) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -34,11 +34,11 @@ export default function TodoPage() {
     )
   }
 
-  const deleteTodo = (id: number) => {
+  const deleteTodo = (id: string) => {
     setTodos(todos.filter((todo) => todo.id !== id))
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       addTodo()
     }
@@ -60,7 +60,7 @@ export default function TodoPage() {
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyDown}
             placeholder="新しいタスクを追加..."
             className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           />
